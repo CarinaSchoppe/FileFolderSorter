@@ -147,12 +147,12 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
 
         println("Moving file: ${file.name} to ${yearFolder.name}")
         //move file to year folder
-        when (!drive) {
-            true -> file.renameTo(File("$driveLetter:\\$year\\${file.name}"))
-            false -> file.renameTo(File("${driveLetter}\\$year\\${file.name}"))
-        }
-        //move file to month folder
-        if (this.monthFolder) {
+        if (!this.monthFolder) {
+            when (!drive) {
+                true -> file.renameTo(File("$driveLetter:\\$year\\${file.name}"))
+                false -> file.renameTo(File("${driveLetter}\\$year\\${file.name}"))
+            }
+        } else if (this.monthFolder) {
             when (!drive) {
                 true -> file.renameTo(File("$driveLetter:\\$year\\$month\\${file.name}"))
                 false -> file.renameTo(File("${driveLetter}\\$year\\$month\\${file.name}"))
