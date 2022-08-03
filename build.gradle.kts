@@ -56,5 +56,5 @@ tasks {
 
 
 application{
-    mainClass.set("de.carina.filesorter.FileSorter")
+    mainClass.set("de.carina.filesorter.FileSorterKt")
 }

@@ -21,10 +21,10 @@ class DriveSelector : Application() {
         loader.setController(this)
         val root: Parent = loader.load() as Parent
         primaryStage!!.title = "File Sorter"
-        primaryStage!!.isResizable = false
-        primaryStage!!.scene = Scene(root)
+        primaryStage.isResizable = false
+        primaryStage.scene = Scene(root)
         initialize()
-        primaryStage!!.show()
+        primaryStage.show()
 
     }
     @FXML
@@ -67,12 +67,12 @@ class DriveSelector : Application() {
         val worksAlert = Alert(Alert.AlertType.INFORMATION)
         worksAlert.title = "Information"
         worksAlert.headerText = "The drive $drive is now being sorted"
-        worksAlert.showAndWait()
 
         Thread {
             FileSorter.fileSorter = FileSorter(drive, monthFolder.isSelected, subFolder.isSelected)
-            FileSorter.fileSorter.start()
+            FileSorter.fileSorter.addAllFiles()
         }.start()
+        worksAlert.showAndWait()
 
     }
 
