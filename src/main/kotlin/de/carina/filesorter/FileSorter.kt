@@ -79,7 +79,7 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
         //check if file is a folder
         if (file.isDirectory) return
         //check if file is an Image
-        if (file.extension != "jpg" && file.extension != "jpeg" && file.extension != "png" && file.extension != "gif" && file.extension != "raw") return
+        if (file.extension.lowercase() != "jpg" && file.extension.lowercase() != "jpeg" && file.extension.lowercase() != "png" && file.extension.lowercase() != "gif" && file.extension.lowercase() != "raw") return
 
 
         //get date from metaData
