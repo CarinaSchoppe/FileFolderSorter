@@ -11,6 +11,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
 import javafx.scene.control.TextField
 import javafx.stage.Stage
+import java.io.File
 import java.net.URL
 
 import java.util.*
@@ -27,8 +28,13 @@ class DriveSelector : Application() {
         primaryStage.show()
 
     }
+
+    @FXML
+    private lateinit var noDrive: CheckBox
+
     @FXML
     private lateinit var subFolder: CheckBox
+
     @FXML
     private lateinit var resources: ResourceBundle
 
@@ -49,27 +55,45 @@ class DriveSelector : Application() {
         if (driveLetter.text.isEmpty()) {
             var alert = Alert(Alert.AlertType.ERROR)
             alert.title = "Error"
-            alert.headerText = "Drive letter is empty"
+            alert.headerText = "Drive Buchstabe oder Ordner pfad ist leer!"
             alert.showAndWait()
             return
         }
         //check if the driveLetter is a single letter from the alphabet
-        if (driveLetter.text.length != 1 || driveLetter.text[0].uppercaseChar() < 'A' || driveLetter.text[0].uppercaseChar() > 'Z') {
+        if (!noDrive.isSelected && driveLetter.text.length != 1 || driveLetter.text[0].uppercaseChar() < 'A' || driveLetter.text[0].uppercaseChar() > 'Z') {
             var alert = Alert(Alert.AlertType.ERROR)
             alert.title = "Error"
-            alert.headerText = "Drive letter is not a single letter from the alphabet"
+            alert.headerText = "Drive Buchstabe MUSS ein Buchstabe aus dem Alphabet sein!"
             alert.showAndWait()
             return
         }
+        if (noDrive.isSelected) {
+            val file = File(driveLetter.text)
+            if (!file.exists()) {
+                var alert = Alert(Alert.AlertType.ERROR)
+                alert.title = "Error"
+                alert.headerText = "Ordner pfad existiert nicht!"
+                alert.showAndWait()
+                return
+            }
+            if (file.isDirectory.not()) {
+                var alert = Alert(Alert.AlertType.ERROR)
+                alert.title = "Error"
+                alert.headerText = "Ordner pfad ist kein Ordner!"
+                alert.showAndWait()
+                return
+            }
 
-        val drive = driveLetter.text[0].uppercaseChar()
+
+        }
+
 
         val worksAlert = Alert(Alert.AlertType.INFORMATION)
         worksAlert.title = "Information"
-        worksAlert.headerText = "The drive $drive is now being sorted"
+        worksAlert.headerText = "Bitte warten, der Ordner wird sortiert!"
 
         Thread {
-            FileSorter.fileSorter = FileSorter(drive, monthFolder.isSelected, subFolder.isSelected)
+            FileSorter.fileSorter = FileSorter(driveLetter.text, monthFolder.isSelected, subFolder.isSelected, noDrive.isSelected)
             FileSorter.fileSorter.addAllFiles()
         }.start()
         worksAlert.showAndWait()
@@ -81,8 +105,8 @@ class DriveSelector : Application() {
         assert(driveLetter != null) { "fx:id=\"driveLetter\" was not injected: check your FXML file 'gui.fxml'." }
         assert(monthFolder != null) { "fx:id=\"monthFolder\" was not injected: check your FXML file 'gui.fxml'." }
         assert(startButton != null) { "fx:id=\"startButton\" was not injected: check your FXML file 'gui.fxml'." }
-        assert(subFolder != null) {"fx:id=\"subFolder\" was not injected: check your FXML file 'gui.fxml'." }
-
+        assert(subFolder != null) { "fx:id=\"subFolder\" was not injected: check your FXML file 'gui.fxml'." }
+        assert(noDrive != null) { "fx:id=\"noDrive\" was not injected: check your FXML file 'gui.fxml'." }
     }
 
 }

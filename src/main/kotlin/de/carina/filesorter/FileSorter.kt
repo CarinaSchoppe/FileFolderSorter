@@ -17,13 +17,34 @@ fun main(args: Array<String>) {
 
 }
 
-class FileSorter(private val driveLetter: Char, private val monthFolder: Boolean, private val subFolder: Boolean) {
+class FileSorter(private val driveLetter: String, private val monthFolder: Boolean, private val subFolder: Boolean, private val drive: Boolean) {
 
 
-    private var driveFolder: File = File("$driveLetter:\\")
+    private var driveFolder: File = when (drive) {
+        true -> File(driveLetter)
+        false -> File("${driveLetter}:\\")
+    }
 
     companion object {
         lateinit var fileSorter: FileSorter
+    }
+
+    private fun deleteFolder() {
+        //delete all folder in drive that does not have a name = to a year
+        driveFolder.listFiles()?.forEach {
+            if (it.isDirectory) {
+                if (it.name.toIntOrNull() == null) {
+                    it.deleteRecursively()
+                } else {
+                    var year = it.name.toInt()
+                    //check if the year is a valid year
+                    if (year < 1000 || year > 9999) {
+                        it.deleteRecursively()
+                    }
+
+                }
+            }
+        }
     }
 
 
@@ -34,10 +55,12 @@ class FileSorter(private val driveLetter: Char, private val monthFolder: Boolean
                 start(it)
             }
         } else {
-            driveFolder.listFiles().forEach {
+            driveFolder.listFiles()?.forEach {
                 start(it)
             }
         }
+
+        deleteFolder()
 
         Platform.runLater {
             var alert = Alert(Alert.AlertType.INFORMATION)
@@ -108,18 +131,31 @@ class FileSorter(private val driveLetter: Char, private val monthFolder: Boolean
         println("$month $year")
 
         //create new folder for year
-        val yearFolder = File("$driveLetter:\\$year")
+        val yearFolder = when (!drive) {
+            true -> File("$driveLetter:\\$year")
+            false -> File("${driveLetter}\\$year")
+        }
+        println(yearFolder.absolutePath)
         if (!yearFolder.exists()) yearFolder.mkdir()
         //create new folder for month
-        val monthFolder = File("$driveLetter:\\$year\\$month")
+        val monthFolder = when (!drive) {
+            true -> File("$driveLetter:\\$year\\$month")
+            false -> File("${driveLetter}\\$year\\$month")
+        }
         if (!monthFolder.exists() && this.monthFolder) monthFolder.mkdir()
 
         //move file to year folder
-        file.renameTo(File("$driveLetter:\\$year\\${file.name}"))
+        when (!drive) {
+            true -> file.renameTo(File("$driveLetter:\\$year\\${file.name}"))
+            false -> file.renameTo(File("${driveLetter}\\$year\\${file.name}"))
+        }
         //move file to month folder
-        if (this.monthFolder) file.renameTo(File("$driveLetter:\\$year\\$month\\${file.name}"))
-
-
+        if (this.monthFolder) {
+            when (!drive) {
+                true -> file.renameTo(File("$driveLetter:\\$year\\$month\\${file.name}"))
+                false -> file.renameTo(File("${driveLetter}\\$year\\$month\\${file.name}"))
+            }
+        }
     }
 }
 
