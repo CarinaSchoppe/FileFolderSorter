@@ -17,7 +17,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-imaging:+")
     testImplementation(kotlin("test"))
 }
 javafx {
