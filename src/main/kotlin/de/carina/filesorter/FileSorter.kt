@@ -145,7 +145,7 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
         }
         if (!monthFolder.exists() && this.monthFolder) monthFolder.mkdir()
 
-        print("Moving file: ${file.name} to ${yearFolder.name}")
+        println("Moving file: ${file.name} to ${yearFolder.name}")
         //move file to year folder
         when (!drive) {
             true -> file.renameTo(File("$driveLetter:\\$year\\${file.name}"))
