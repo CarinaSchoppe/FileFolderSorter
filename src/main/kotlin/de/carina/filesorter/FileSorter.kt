@@ -81,6 +81,7 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
         //check if file is an Image
         if (file.extension != "jpg" && file.extension != "jpeg" && file.extension != "png" && file.extension != "gif" && file.extension != "raw") return
 
+
         //get date from metaData
 
         val attr: BasicFileAttributes = Files.readAttributes(file.toPath(), BasicFileAttributes::class.java)
@@ -130,14 +131,12 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
         }
         val year = calendar.get(Calendar.YEAR)
 
-        println("$month $year")
 
         //create new folder for year
         val yearFolder = when (!drive) {
             true -> File("$driveLetter:\\$year")
             false -> File("${driveLetter}\\$year")
         }
-        println(yearFolder.absolutePath)
         if (!yearFolder.exists()) yearFolder.mkdir()
         //create new folder for month
         val monthFolder = when (!drive) {
@@ -146,6 +145,7 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
         }
         if (!monthFolder.exists() && this.monthFolder) monthFolder.mkdir()
 
+        print("Moving file: ${file.name} to ${yearFolder.name}")
         //move file to year folder
         when (!drive) {
             true -> file.renameTo(File("$driveLetter:\\$year\\${file.name}"))
