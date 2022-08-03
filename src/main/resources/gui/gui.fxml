@@ -9,5 +9,6 @@
       <TextField fx:id="driveLetter" layoutX="112.0" layoutY="14.0" prefHeight="63.0" prefWidth="189.0" promptText="Buchstabe vom Drive z.B. &quot;D&quot;"/>
       <CheckBox fx:id="subFolder" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" text="Auch Unterordner anschauen?"/>
       <CheckBox fx:id="noDrive" layoutX="14.0" layoutY="147.0" mnemonicParsing="false" text="Kein Drive sondern Ordner"/>
+      <CheckBox fx:id="deleteFolders" layoutX="265.0" layoutY="147.0" mnemonicParsing="false" text="Alte Ordner löschen?"/>
    </children>
 </AnchorPane>

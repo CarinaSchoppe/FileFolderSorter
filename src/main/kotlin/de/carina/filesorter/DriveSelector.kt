@@ -30,6 +30,9 @@ class DriveSelector : Application() {
     }
 
     @FXML
+    private lateinit var deleteFolders: CheckBox
+
+    @FXML
     private lateinit var noDrive: CheckBox
 
     @FXML
@@ -93,7 +96,7 @@ class DriveSelector : Application() {
         worksAlert.headerText = "Bitte warten, der Ordner wird sortiert!"
 
         Thread {
-            FileSorter.fileSorter = FileSorter(driveLetter.text, monthFolder.isSelected, subFolder.isSelected, noDrive.isSelected)
+            FileSorter.fileSorter = FileSorter(driveLetter.text, monthFolder.isSelected, subFolder.isSelected, noDrive.isSelected, deleteFolders.isSelected)
             FileSorter.fileSorter.addAllFiles()
         }.start()
         worksAlert.showAndWait()
@@ -102,6 +105,7 @@ class DriveSelector : Application() {
 
     @FXML
     fun initialize() {
+        assert(deleteFolders != null) { "fx:id=\"deleteFolders\" was not injected: check your FXML file 'gui.fxml'." }
         assert(driveLetter != null) { "fx:id=\"driveLetter\" was not injected: check your FXML file 'gui.fxml'." }
         assert(monthFolder != null) { "fx:id=\"monthFolder\" was not injected: check your FXML file 'gui.fxml'." }
         assert(startButton != null) { "fx:id=\"startButton\" was not injected: check your FXML file 'gui.fxml'." }

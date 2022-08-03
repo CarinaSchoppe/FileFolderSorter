@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
 
 }
 
-class FileSorter(private val driveLetter: String, private val monthFolder: Boolean, private val subFolder: Boolean, private val drive: Boolean) {
+class FileSorter(private val driveLetter: String, private val monthFolder: Boolean, private val subFolder: Boolean, private val drive: Boolean, private val deleteFolders: Boolean) {
 
 
     private var driveFolder: File = when (drive) {
@@ -60,7 +60,9 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
             }
         }
 
-        deleteFolder()
+        if (deleteFolders) {
+            deleteFolder()
+        }
 
         Platform.runLater {
             var alert = Alert(Alert.AlertType.INFORMATION)
