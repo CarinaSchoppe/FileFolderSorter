@@ -39,12 +39,8 @@ tasks {
     }
     withType<KotlinCompile>{
         kotlinOptions {
-            freeCompilerArgs = listOf(
-                "-Xuse-k2",
-                "-Xjdk-release=1.8"
-            )
             jvmTarget = "1.8"
-            languageVersion = "1.7"
+            languageVersion = "2.0"
         }
     }
     test {
