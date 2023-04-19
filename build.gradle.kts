@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "+"
-    java
     //javafx plugin
     id("application")
     id("com.github.johnrengelman.shadow") version "+"
