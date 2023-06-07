@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "de.carina"
-version = "1.0"
+version = "1.0.2"
 description = "Carinas Picture sorter"
 
 repositories {
@@ -29,7 +29,7 @@ tasks {
 
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
-        options.release.set(8)
+        options.release.set(11)
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
@@ -39,7 +39,7 @@ tasks {
     }
     withType<KotlinCompile>{
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "11"
             languageVersion = "2.0"
         }
     }

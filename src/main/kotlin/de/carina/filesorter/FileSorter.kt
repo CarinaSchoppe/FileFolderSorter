@@ -36,7 +36,7 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
                 if (it.name.toIntOrNull() == null) {
                     it.deleteRecursively()
                 } else {
-                    var year = it.name.toInt()
+                    val year = it.name.toInt()
                     //check if the year is a valid year
                     if (year < 1000 || year > 9999) {
                         it.deleteRecursively()
@@ -160,10 +160,3 @@ class FileSorter(private val driveLetter: String, private val monthFolder: Boole
         }
     }
 }
-
-
-
-
-
-
-
